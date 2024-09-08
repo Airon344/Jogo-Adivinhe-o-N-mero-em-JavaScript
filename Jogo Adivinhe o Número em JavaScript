@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivinhe o Número</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        #game-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: 50px auto;
+        }
+        input, button {
+            font-size: 16px;
+            padding: 5px 10px;
+            margin: 10px;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Adivinhe o Número</h1>
+        <p>Tente adivinhar o número entre 1 e 100:</p>
+        <input type="number" id="guessInput" min="1" max="100">
+        <button onclick="checkGuess()">Adivinhar</button>
+        <p id="message"></p>
+        <p id="attempts"></p>
+    </div>
+
+    <script>
+        let targetNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guessInput').value);
+            const messageElement = document.getElementById('message');
+            const attemptsElement = document.getElementById('attempts');
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                messageElement.textContent = "Por favor, insira um número válido entre 1 e 100.";
+                return;
+            }
+
+            attempts++;
+
+            if (guess === targetNumber) {
+                messageElement.textContent = `Parabéns! Você acertou o número ${targetNumber}!`;
+                messageElement.style.color = "green";
+                document.querySelector('button').disabled = true;
+            } else if (guess < targetNumber) {
+                messageElement.textContent = "Tente um número maior!";
+                messageElement.style.color = "blue";
+            } else {
+                messageElement.textContent = "Tente um número menor!";
+                messageElement.style.color = "blue";
+            }
+
+            attemptsElement.textContent = `Tentativas: ${attempts}`;
+        }
+    </script>
+</body>
+</html>
